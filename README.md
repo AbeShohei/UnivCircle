@@ -1,20 +1,106 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# UnivCircle Connect
 
-# Run and deploy your AI Studio app
+**UnivCircle Connect** は、AI（Google Gemini）を活用した、モダンでレスポンシブな大学サークル新歓・求人プラットフォームです。
+「モバイルファースト」「ダークモード標準」「グラスモーフィズム」をデザインの核とし、新入生が自分にぴったりのコミュニティを直感的に見つけられる体験を提供します。
 
-This contains everything you need to run your app locally.
+## 📖 プロジェクト概要
 
-View your app in AI Studio: https://ai.studio/apps/drive/183BXYPTNmUBuY7rnRmXfQYi7P7BHJRY6
+新入生にとっては「膨大なサークルの中から自分に合う場所を見つける難しさ」、サークル運営側にとっては「効果的な広報活動の難しさ」を解決するために開発されました。
+従来のキーワード検索に加え、自然言語による**AIマッチング**機能を搭載しています。
 
-## Run Locally
+## ✨ 主な機能
 
-**Prerequisites:**  Node.js
+### 1. ユーザー向け機能 (検索・閲覧)
+*   **TOPページ (ランディング)**
+    *   **3Dフローティングアニメーション**: 没入感のあるダークモードデザインと動的な背景要素。
+    *   **AI Neural Match**: 「ガチすぎず、でも成長できる場所がいい」といった自然言語の要望から、Gemini AIが最適な検索条件（大学、キャンパス、カテゴリ、タグ）を推論・提案します。
+*   **検索ページ**
+    *   **高度なフィルタリング**: キーワード、大学・キャンパス（予測変換付き）、カテゴリ、タグによる絞り込み。
+    *   **レスポンシブレイアウト**: スマホでは積み上げ型、PCではサイドバー＋グリッド表示に最適化。
+*   **サークル詳細ページ**
+    *   **ビジュアル重視**: メイン画像、活動風景ギャラリー。
+    *   **新歓カレンダー**: イベント日程をカレンダー表示。ホバーで場所や定員、内容を確認可能。
+    *   **メンバー構成グラフ**: 男女比、学年比を可視化（公開/非公開設定可）。
+    *   **よくある質問 (FAQ)**: Q&A形式で不安を解消。
+    *   **お問い合わせ**: モーダルフォームおよびSNS（X, Instagram）への導線。
 
+### 2. サークル運営者向け機能 (管理・掲載)
+*   **新規掲載・登録**
+    *   **AI推敲機能**: 入力した紹介文を、AIがより魅力的な新歓用の文章にブラッシュアップする機能を搭載。
+    *   基本情報、活動日、費用、SNSリンクなどの詳細設定。
+*   **管理ダッシュボード**
+    *   **タブ切り替えUI**: 「基本情報」「新歓日程」「画像・ギャラリー」「メンバー管理」をスムーズに切り替え。
+    *   **新歓スケジュール管理**: イベントの日時、場所、定員の追加・編集・削除。
+    *   **メンバー管理**: 役職や学年の名簿管理。
+    *   **画像管理**: ギャラリー画像の追加・削除。
+    *   **お問い合わせ設定**: 通知用メールアドレスの設定。
+*   **認証・マイページ**
+    *   管理しているサークルの一覧表示と編集画面への遷移。
+    *   デモ用のサインアップ/ログイン機能（LocalStorageを使用）。
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## 🛠 技術スタック
+
+*   **Frontend Framework**: React 19
+*   **Language**: TypeScript
+*   **Routing**: React Router DOM (v7)
+*   **Styling**:
+    *   **Tailwind CSS**: ユーティリティファースト、カスタムアニメーション設定。
+    *   **Glassmorphism**: 半透明のガラス効果を用いたモダンUI設計。
+*   **AI Integration**:
+    *   **Google Gemini API (`@google/genai`)**: 検索意図の解析、紹介文の生成・推敲に使用。
+*   **Icons**: Lucide React
+*   **Data Management**:
+    *   **LocalStorage**: ユーザー登録データや編集内容の永続化（デモ用）。
+    *   **CSV Parsing**: 全国の大学・キャンパスデータの読み込みとマッピング。
+    *   **Mock Data Generation**: 開発用に数百件規模のサークルデータを自動生成。
+
+## 📂 ディレクトリ構造
+
+```text
+/
+├── index.html              # エントリーポイント (Tailwind設定、Font読み込み)
+├── index.tsx               # Reactルート
+├── App.tsx                 # ルーティング定義
+├── types.ts                # 型定義 (Circle, User, ScheduleEvent等)
+├── constants.ts            # 定数・モックデータ・CSVパースロジック
+│
+├── components/             # UIコンポーネント
+│   ├── Layout.tsx          # ヘッダー・フッター・ナビゲーション
+│   ├── CircleCard.tsx      # サークルカード
+│   ├── Modal.tsx           # 汎用モーダル
+│   ├── ShinkanCalendar.tsx # 新歓スケジュールカレンダー
+│   └── UniversityAutocomplete.tsx # 大学名予測変換
+│
+├── pages/                  # ページコンポーネント
+│   ├── TopPage.tsx         # トップ (AI検索、ヒーロー)
+│   ├── SearchPage.tsx      # 検索一覧
+│   ├── DetailPage.tsx      # 詳細ページ
+│   ├── AdminPage.tsx       # 管理画面
+│   ├── CreateCirclePage.tsx # 掲載募集LP
+│   ├── CircleRegisterPage.tsx # 新規登録フォーム
+│   ├── UserProfilePage.tsx # マイページ
+│   ├── LoginPage.tsx       # ログイン
+│   └── SignupPage.tsx      # サインアップ
+│
+└── services/               # ロジック・API
+    ├── geminiService.ts    # Gemini AI連携
+    └── circleService.ts    # データ管理 (Mock + Local)
+```
+
+## 🎨 デザインコンセプト
+
+1.  **Dark Mode Standard**:
+    *   ベースカラーに `bg-dark-900 (#0a0a0f)` を採用。長時間見ていても疲れにくく、没入感のある配色。
+2.  **Mobile First**:
+    *   スマホでの操作性を最優先。タップ領域の確保、横スクロールフィルター、ハンバーガーメニューなどを実装。
+3.  **Interactive Elements**:
+    *   背景の3Dフローティングアイコン、ホバー時のグロー効果、スムーズなトランジション。
+
+## 🚀 データ仕様
+
+*   **大学データ**: 実際の日本の大学CSVデータ（国立・公立・私立）を内包し、キャンパス情報と紐付けています。
+*   **永続化**: ユーザーが登録・編集したサークル情報は `localStorage` に保存され、ブラウザをリロードしても保持されます。
+
+---
+
+&copy; 2024 UnivCircle Connect
