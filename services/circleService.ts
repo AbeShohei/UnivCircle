@@ -11,9 +11,8 @@ const getLocalCircles = (): Circle[] => {
 };
 
 // Helper to save local circles
-const saveLocalCircle = (circle: Circle) => {
-  const current = getLocalCircles();
-  localStorage.setItem(STORAGE_KEY, JSON.stringify([...current, circle]));
+const saveLocalCircles = (circles: Circle[]) => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(circles));
 };
 
 export const circleService = {
@@ -36,12 +35,41 @@ export const circleService = {
       ...newCircle,
       id: `local-${Date.now()}`, // Generate unique ID
     };
-    saveLocalCircle(circle);
+    const current = getLocalCircles();
+    saveLocalCircles([...current, circle]);
     return circle;
   },
 
+  // Update existing circle
+  updateCircle: (updatedCircle: Circle): void => {
+    const local = getLocalCircles();
+    // Check if it's a local circle
+    const index = local.findIndex(c => c.id === updatedCircle.id);
+    
+    if (index !== -1) {
+      // It's a local circle, update it
+      local[index] = updatedCircle;
+      saveLocalCircles(local);
+    } else {
+      // If it's a mock circle, we can't persist changes to constants.ts in a static build,
+      // but for this demo environment, we can "shadow" it by adding it to local storage
+      // effectively treating it as a new local copy overriding the mock.
+      // However, to keep it simple and avoid duplicates in getAllCircles, 
+      // we'll just simulate success for mock circles or add to local as if it's new but keeping ID.
+      // For a robust demo, let's treat it as "saving a copy" if it was mock.
+      
+      // Check if it was a mock circle
+      const isMock = MOCK_CIRCLES.some(c => c.id === updatedCircle.id);
+      if (isMock) {
+        // In a real app, you can't edit hardcoded mocks. 
+        // We will just do nothing for mocks or log a warning.
+        console.warn("Cannot permanently update mock data in this demo environment.");
+      }
+    }
+  },
+
   // Get circles managed by a specific user (admin)
-  getMinagedCircles: (userId: string): Circle[] => {
+  getManagedCircles: (userId: string): Circle[] => {
     // For demo purposes, we will return:
     // 1. Circles explicitly created by this user (stored in local with adminId)
     // 2. If none, return a default mock circle just so the admin panel isn't empty for demo

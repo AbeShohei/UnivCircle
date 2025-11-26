@@ -37,7 +37,7 @@ const UserProfilePage: React.FC = () => {
   const [editFormData, setEditFormData] = useState<UserData>(user);
 
   // Get Managed Circles from Service
-  const managedCircles = circleService.getMinagedCircles(user.id);
+  const managedCircles = circleService.getManagedCircles(user.id);
 
   const handleLogout = () => {
     localStorage.removeItem('univCircleUser');

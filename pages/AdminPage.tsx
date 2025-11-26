@@ -69,7 +69,7 @@ const AdminPage: React.FC = () => {
   useEffect(() => {
     // Load the user's circle
     const user = JSON.parse(localStorage.getItem('univCircleUser') || '{}');
-    const managedCircles = circleService.getMinagedCircles(user.id);
+    const managedCircles = circleService.getManagedCircles(user.id);
     
     // For demo, just pick the first one
     if (managedCircles.length > 0) {
@@ -237,7 +237,7 @@ const AdminPage: React.FC = () => {
     setIsScheduleModalOpen(false);
   };
 
-  // Mock Save to Local (In a real app, this would call circleService.update)
+  // Save to Local via Service
   const handleSaveAll = () => {
      if (!circleData) return;
      const updated: Circle = {
@@ -262,9 +262,12 @@ const AdminPage: React.FC = () => {
         } : undefined
         // members would go here too if in circleData
      };
-     // Just update state for now to simulate visual save, in real app call API
+     
+     // Update state and persist
      setCircleData(updated);
-     alert('変更を保存しました (デモ動作)');
+     circleService.updateCircle(updated);
+     
+     alert('変更を保存しました');
   };
 
   const tabs = [

@@ -3,7 +3,7 @@ import { Circle, CircleCategory, ScheduleEvent, FAQ } from './types';
 export const ALL_TAGS = [
   'インカレ', '初心者歓迎', 'ガチ勢', '飲み会多め', 'まったり', 
   '週1からOK', '合宿あり', '就活に強い', 'プログラミング', 
-  '起業', 'テニス', 'ダンス', '軽音', '国際交流'
+  '起業', 'テニス', 'ダンス', '軽音', '国際交流', 'e-sports', 'ボランティア'
 ];
 
 // CSV for University Name and Reading
@@ -872,66 +872,98 @@ const generateMockCircles = (): Circle[] => {
   let idCounter = 1;
 
   MOCK_UNIVERSITIES.forEach(uni => {
-    uni.campuses.forEach(campus => {
-      // Generate 2-4 circles per campus to keep it reasonably dense but manageable
-      const count = Math.floor(Math.random() * 3) + 2; 
+    // Generate exactly one circle per university to keep the list manageable but complete
+    const campus = getRandomItem(uni.campuses);
+    
+    const category = getRandomItem(Object.values(CircleCategory));
+    const tags = getRandomSubset(ALL_TAGS, 3);
+    const suffix = getRandomItem(CIRCLE_NAMES_SUFFIX);
+    // Create a name like "UniversityName Tennis Circle"
+    const name = `${uni.name} ${suffix}`;
+    
+    // Random Images
+    const imageId = Math.floor(Math.random() * 1000);
+    const imageUrl = `https://picsum.photos/800/600?random=${idCounter}`;
+    
+    // Generate dates dynamically for schedules
+    const today = new Date();
+    const nextWeek = new Date(today);
+    nextWeek.setDate(today.getDate() + 7);
+    const twoWeeks = new Date(today);
+    twoWeeks.setDate(today.getDate() + 14);
 
-      for (let i = 0; i < count; i++) {
-        const category = getRandomItem(Object.values(CircleCategory));
-        const tags = getRandomSubset(ALL_TAGS, 3);
-        const name = `${uni.name.substring(0, 4)} ${getRandomItem(CIRCLE_NAMES_SUFFIX)} ${String.fromCharCode(65 + i)}`;
-        
-        // Random Images
-        const imageId = Math.floor(Math.random() * 1000);
-        const imageUrl = `https://picsum.photos/800/600?random=${idCounter}`;
-
-        circles.push({
-          id: idCounter.toString(),
-          name: name,
-          university: uni.name,
-          category: category,
-          description: getRandomItem(DESCRIPTIONS) + ' ' + getRandomItem(DESCRIPTIONS),
-          shortDescription: getRandomItem(DESCRIPTIONS).substring(0, 40) + '...',
-          tags: tags,
-          campus: [campus],
-          activityDays: getRandomSubset(['月', '火', '水', '木', '金', '土', '日'], 2),
-          memberCount: Math.floor(Math.random() * 100) + 10,
-          showMemberBreakdown: Math.random() > 0.5,
-          memberBreakdown: {
-            gender: { male: Math.floor(Math.random() * 30), female: Math.floor(Math.random() * 30) },
-            grade: { y1: 10, y2: 10, y3: 5, y4: 2, other: 0 }
+    circles.push({
+      id: idCounter.toString(),
+      name: name,
+      university: uni.name,
+      category: category,
+      description: getRandomItem(DESCRIPTIONS) + '\n\n' + getRandomItem(DESCRIPTIONS) + '\n\n' + 'いつでも見学受け付けています！気軽にご連絡ください。',
+      shortDescription: getRandomItem(DESCRIPTIONS).substring(0, 40) + '...',
+      tags: tags,
+      campus: [campus],
+      activityDays: getRandomSubset(['月', '火', '水', '木', '金', '土', '日'], 2),
+      memberCount: Math.floor(Math.random() * 100) + 10,
+      showMemberBreakdown: true, // Always show for "complete" mock data
+      memberBreakdown: {
+        gender: { male: Math.floor(Math.random() * 30) + 10, female: Math.floor(Math.random() * 30) + 10 },
+        grade: { y1: 15, y2: 12, y3: 8, y4: 3, other: 0 }
+      },
+      representativeEmail: `contact${idCounter}@example.com`,
+      contactEmail: `contact${idCounter}@example.com`,
+      imageUrl: imageUrl,
+      images: [
+        imageUrl, 
+        `https://picsum.photos/800/600?random=${idCounter + 10000}`, 
+        `https://picsum.photos/800/600?random=${idCounter + 20000}`
+      ],
+      instagramUrl: 'https://instagram.com/mock_circle',
+      twitterUrl: 'https://x.com/mock_circle',
+      foundedYear: 2000 + Math.floor(Math.random() * 24),
+      fee: Math.random() > 0.5 ? '月額500円' : '半期3000円',
+      schedules: [
+          { 
+            id: `sch-${idCounter}-1`, 
+            date: today.toISOString().split('T')[0], 
+            title: '新歓体験会・説明会', 
+            content: '活動の雰囲気を知れるチャンスです！初心者大歓迎。必要な道具は貸し出します。', 
+            location: '学生会館 301会議室', 
+            capacity: '20名', 
+            startTime: '18:00', 
+            endTime: '20:00' 
           },
-          representativeEmail: `contact${idCounter}@example.com`,
-          contactEmail: `contact${idCounter}@example.com`,
-          imageUrl: imageUrl,
-          images: [imageUrl, `https://picsum.photos/800/600?random=${idCounter + 10000}`],
-          // Ensure these are populated for detail page as requested
-          instagramUrl: 'https://instagram.com/mock_circle',
-          twitterUrl: 'https://x.com/mock_circle',
-          foundedYear: 2000 + Math.floor(Math.random() * 24),
-          fee: Math.random() > 0.5 ? '月額500円' : '半期3000円',
-          schedules: [
-             { 
-               id: `sch-${idCounter}`, 
-               date: new Date().toISOString().split('T')[0], // Today
-               title: '新歓体験会', 
-               content: '活動の雰囲気を知れるチャンスです！', 
-               location: '学生会館', 
-               capacity: '20名', 
-               startTime: '18:00', 
-               endTime: '20:00' 
-             }
-          ],
-          customFields: [
-             { id: `custom-${idCounter}`, label: '公式Webサイト', value: 'https://example.com' }
-          ],
-          faqs: [
-             { id: `faq-${idCounter}`, question: '初心者でも大丈夫ですか？', answer: 'はい！大歓迎です。先輩が優しく教えます。' }
-          ]
-        });
-        idCounter++;
-      }
+          { 
+            id: `sch-${idCounter}-2`, 
+            date: nextWeek.toISOString().split('T')[0], 
+            title: '新入生歓迎食事会', 
+            content: 'みんなでご飯を食べながら交流しましょう！先輩たちの履修相談も聞けます。', 
+            location: '大学近くのレストラン', 
+            capacity: '30名', 
+            startTime: '19:00', 
+            endTime: '21:00' 
+          },
+          { 
+            id: `sch-${idCounter}-3`, 
+            date: twoWeeks.toISOString().split('T')[0], 
+            title: '合同練習会', 
+            content: '他大学との合同練習です。レベルに合わせてグループ分けするので安心してください。', 
+            location: '体育館アリーナ', 
+            capacity: '40名', 
+            startTime: '13:00', 
+            endTime: '17:00' 
+          }
+      ],
+      customFields: [
+          { id: `custom-${idCounter}-1`, label: '公式Webサイト', value: 'https://example.com' },
+          { id: `custom-${idCounter}-2`, label: '実績', value: Math.random() > 0.5 ? '関東大会ベスト8' : '学園祭人気投票1位' },
+          { id: `custom-${idCounter}-3`, label: '活動場所詳細', value: '主に部室棟の共用スペースや近くの公園で活動しています。' }
+      ],
+      faqs: [
+          { id: `faq-${idCounter}-1`, question: '初心者でも大丈夫ですか？', answer: 'はい！大歓迎です。現在のメンバーの半数以上が大学から始めています。' },
+          { id: `faq-${idCounter}-2`, question: '兼サーは可能ですか？', answer: '可能です。週1回の参加でもOKですので、他のサークルやバイトと両立しやすいです。' },
+          { id: `faq-${idCounter}-3`, question: 'お金はどのくらいかかりますか？', answer: '会費以外には、合宿（任意参加）の費用がかかる程度です。道具は貸し出しもあります。' }
+      ]
     });
+    idCounter++;
   });
 
   return circles;
