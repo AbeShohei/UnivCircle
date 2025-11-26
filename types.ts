@@ -78,6 +78,18 @@ export interface Circle {
   faqs: FAQ[]; // Frequently Asked Questions
 }
 
+export interface Article {
+  id: string;
+  title: string;
+  category: string;
+  date: string;
+  image: string;
+  readTime: string;
+  content: string; // HTML string
+  author: string;
+  tags: string[];
+}
+
 export interface FilterState {
   keyword: string;
   university: string;

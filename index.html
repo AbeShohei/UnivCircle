@@ -41,6 +41,7 @@
               'float-fast': 'float 4s ease-in-out infinite',
               'drift': 'drift 20s linear infinite',
               'pulse-glow': 'pulse-glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'infinite-scroll': 'infinite-scroll 40s linear infinite',
             },
             keyframes: {
               float: {
@@ -54,6 +55,10 @@
               'pulse-glow': {
                 '0%, 100%': { opacity: '1' },
                 '50%': { opacity: '.5' },
+              },
+              'infinite-scroll': {
+                '0%': { transform: 'translateX(0)' },
+                '100%': { transform: 'translateX(-50%)' },
               }
             }
           }

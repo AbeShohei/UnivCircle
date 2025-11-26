@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Search, User, LogIn, LogOut, PlusCircle, Settings } from 'lucide-react';
+import { Menu, X, Search, User, LogIn, LogOut, PlusCircle, Settings, Building2 } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 interface LayoutProps {
@@ -45,12 +45,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex space-x-8">
+            <nav className="hidden md:flex space-x-6">
               <Link to="/search" className={`text-sm font-medium transition-colors ${location.pathname === '/search' ? 'text-primary-400' : 'text-gray-400 hover:text-white'}`}>
                 サークルを探す
               </Link>
               <Link to="/create-circle" className={`text-sm font-medium transition-colors ${location.pathname === '/create-circle' ? 'text-primary-400' : 'text-gray-400 hover:text-white'}`}>
                 サークルを掲載する
+              </Link>
+              <Link to="/ads-info" className={`text-sm font-medium transition-colors ${location.pathname === '/ads-info' ? 'text-primary-400' : 'text-gray-400 hover:text-white'}`}>
+                企業・広告掲載
               </Link>
             </nav>
 
@@ -141,6 +144,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <PlusCircle className="w-5 h-5 text-gray-500" />
                 サークルを掲載する
               </Link>
+              <Link 
+                to="/ads-info" 
+                className="block px-3 py-3 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 flex items-center gap-3"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <Building2 className="w-5 h-5 text-gray-500" />
+                企業・広告掲載
+              </Link>
               
               <div className="border-t border-white/10 my-2 pt-2">
                 {isLoggedIn ? (
@@ -193,10 +204,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-gray-500 tracking-wider uppercase">サポート</h3>
+              <h3 className="text-sm font-semibold text-gray-500 tracking-wider uppercase">ビジネス</h3>
               <ul className="mt-4 space-y-4">
-                <li><a href="#" className="text-base text-gray-400 hover:text-white transition">ヘルプセンター</a></li>
-                <li><a href="#" className="text-base text-gray-400 hover:text-white transition">利用規約</a></li>
+                <li><Link to="/ads-info" className="text-base text-gray-400 hover:text-white transition">広告掲載について</Link></li>
               </ul>
             </div>
             <div>

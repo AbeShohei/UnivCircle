@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { Search, Sparkles, ArrowRight, Activity, Music, Palette, BookOpen, Heart, Users, Gamepad2, Dumbbell, Globe, FlaskConical, Laptop, PlusCircle } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Search, Sparkles, ArrowRight, Activity, Music, Palette, BookOpen, Heart, Users, Gamepad2, Dumbbell, Globe, FlaskConical, Laptop, PlusCircle, Calendar, Clock } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { CircleCategory } from '../types';
 import CircleCard from '../components/CircleCard';
 import { getSmartSearchFilters } from '../services/geminiService';
 import { circleService } from '../services/circleService';
+import { MOCK_ARTICLES } from '../constants';
 
 const TopPage: React.FC = () => {
   const navigate = useNavigate();
@@ -12,8 +13,102 @@ const TopPage: React.FC = () => {
   const [aiPrompt, setAiPrompt] = useState('');
   const [isAiLoading, setIsAiLoading] = useState(false);
 
-  // Get featured circles (random shuffle or new ones)
-  const featuredCircles = circleService.getAllCircles().slice(0, 3);
+  // --- FEATURED ARTICLES SCROLL STATE ---
+  const articleScrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isArticlePaused, setIsArticlePaused] = useState(false);
+  const articleScrollPos = useRef(0); // Use Ref for float precision
+
+  // --- FEATURED CIRCLES SCROLL STATE ---
+  const circleScrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isCirclePaused, setIsCirclePaused] = useState(false);
+  const circleScrollPos = useRef(-1); // Use Ref for float precision, -1 means uninitialized
+
+  // Get featured circles (Get more to fill the carousel)
+  const baseFeaturedCircles = circleService.getAllCircles().slice(0, 8);
+  // Triplicate for infinite loop buffer
+  const carouselCircles = [...baseFeaturedCircles, ...baseFeaturedCircles, ...baseFeaturedCircles];
+  // Triple items for smoother infinite loop simulation with manual scrolling
+  const carouselArticles = [...MOCK_ARTICLES, ...MOCK_ARTICLES, ...MOCK_ARTICLES];
+
+  // Infinite Auto-Scroll Logic (Articles: Standard Flow -> Right)
+  useEffect(() => {
+    const el = articleScrollContainerRef.current;
+    if (!el) return;
+
+    let animationId: number;
+    const speed = 0.8; // px per frame
+
+    const step = () => {
+      if (!el) return;
+
+      if (!isArticlePaused) {
+        // Increment float position
+        articleScrollPos.current += speed;
+        
+        // Calculate the width of one set of items (1/3 of total because we triplicated)
+        const totalWidth = el.scrollWidth;
+        const singleSetWidth = totalWidth / 3;
+
+        // Reset Logic: If we scrolled past the first set, jump back to start
+        if (articleScrollPos.current >= singleSetWidth) {
+           articleScrollPos.current = 0;
+           // If it feels jumpy, we can do: articleScrollPos.current -= singleSetWidth;
+           // But setting to 0 is safer for drift.
+        }
+
+        el.scrollLeft = articleScrollPos.current;
+      } else {
+        // Sync Ref with DOM if user is manually scrolling
+        articleScrollPos.current = el.scrollLeft;
+      }
+      animationId = requestAnimationFrame(step);
+    };
+
+    animationId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animationId);
+  }, [isArticlePaused]); // Re-bind if pause state changes
+
+
+  // Infinite Auto-Scroll Logic (Circles: Reverse Flow <- Left)
+  useEffect(() => {
+    const el = circleScrollContainerRef.current;
+    if (!el) return;
+
+    let animationId: number;
+    const speed = 0.8; 
+
+    const step = () => {
+      if (!el) return;
+      
+      const totalWidth = el.scrollWidth;
+      const singleSetWidth = totalWidth / 3;
+
+      // Initialization: If ref is -1, jump to the middle set (start of 2nd set)
+      if (circleScrollPos.current === -1 && singleSetWidth > 0) {
+        circleScrollPos.current = singleSetWidth;
+        el.scrollLeft = circleScrollPos.current;
+      }
+
+      if (!isCirclePaused && singleSetWidth > 0) {
+        // Decrement position (Move Left)
+        circleScrollPos.current -= speed;
+
+        // Reset Logic: If we hit the left edge (0), jump to the start of 2nd set
+        if (circleScrollPos.current <= 0) {
+           circleScrollPos.current = singleSetWidth;
+        }
+
+        el.scrollLeft = circleScrollPos.current;
+      } else {
+        // Sync Ref with DOM if user is manually scrolling
+        circleScrollPos.current = el.scrollLeft;
+      }
+      animationId = requestAnimationFrame(step);
+    };
+
+    animationId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animationId);
+  }, [isCirclePaused, carouselCircles.length]); // Dependency on data length
 
   // Handlers
   const handleKeywordSearch = () => {
@@ -253,7 +348,66 @@ const TopPage: React.FC = () => {
           </div>
         </div>
 
-        {/* 4. FEATURED / NEW ARRIVALS */}
+        {/* 3.5 FEATURED ARTICLES CAROUSEL (Infinite Scroll with Manual Override) */}
+        <div className="py-12 bg-dark-800/30 border-y border-white/5 relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-3xl font-bold text-white mb-2">特集記事</h2>
+                <p className="text-gray-400">先輩の体験談や新歓攻略情報をお届け</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Infinite Scroll Container (Interactive) */}
+          <div className="w-full relative [mask-image:_linear-gradient(to_right,transparent_0,_black_64px,_black_calc(100%-64px),transparent_100%)]">
+            <div 
+              ref={articleScrollContainerRef}
+              className="flex overflow-x-auto scrollbar-hide gap-6 px-4 py-4 cursor-grab active:cursor-grabbing"
+              onMouseEnter={() => setIsArticlePaused(true)}
+              onMouseLeave={() => setIsArticlePaused(false)}
+              onTouchStart={() => setIsArticlePaused(true)}
+              onTouchEnd={() => setIsArticlePaused(false)}
+            >
+              {carouselArticles.map((article, index) => (
+                <div 
+                  key={`${article.id}-${index}`} 
+                  className="w-[280px] sm:w-[320px] flex-shrink-0 group select-none"
+                >
+                  <Link to={`/article/${article.id}`} className="block h-full">
+                    <div className="rounded-xl overflow-hidden glass-card border border-white/10 hover:border-primary-500/30 transition-all duration-300 h-full flex flex-col hover:transform hover:translate-y-[-4px] shadow-lg">
+                      <div className="relative aspect-[16/9] overflow-hidden">
+                        <img 
+                          src={article.image} 
+                          alt={article.title} 
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          draggable="false"
+                        />
+                        <div className="absolute top-2 left-2 px-2.5 py-1 bg-black/60 backdrop-blur-md rounded text-[10px] font-bold text-white border border-white/10">
+                          {article.category}
+                        </div>
+                      </div>
+                      <div className="p-4 flex flex-col flex-1">
+                        <div className="flex items-center gap-3 text-xs text-gray-500 mb-2">
+                          <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {article.date}</span>
+                          <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {article.readTime}</span>
+                        </div>
+                        <h3 className="text-lg font-bold text-white mb-2 line-clamp-2 group-hover:text-primary-400 transition-colors">
+                          {article.title}
+                        </h3>
+                        <div className="mt-auto pt-4 flex items-center text-sm font-bold text-gray-400 group-hover:text-white transition-colors">
+                          記事を読む <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* 4. FEATURED CIRCLES (Infinite Scroll - Reverse Direction) */}
         <div className="py-24 bg-gradient-to-t from-black to-dark-900 relative">
            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between mb-12">
@@ -263,13 +417,22 @@ const TopPage: React.FC = () => {
               </Link>
             </div>
             
-            {/* Scroll Container */}
-            <div className="flex overflow-x-auto pb-8 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6 scrollbar-hide snap-x">
-              {featuredCircles.map(circle => (
-                <div key={circle.id} className="min-w-[300px] sm:min-w-0 snap-center h-full">
-                   <CircleCard circle={circle} />
-                </div>
-              ))}
+            {/* Scroll Container (Reverse Infinite Scroll) */}
+            <div className="w-full relative [mask-image:_linear-gradient(to_right,transparent_0,_black_64px,_black_calc(100%-64px),transparent_100%)]">
+              <div 
+                ref={circleScrollContainerRef}
+                className="flex overflow-x-auto scrollbar-hide gap-6 px-4 py-8 cursor-grab active:cursor-grabbing"
+                onMouseEnter={() => setIsCirclePaused(true)}
+                onMouseLeave={() => setIsCirclePaused(false)}
+                onTouchStart={() => setIsCirclePaused(true)}
+                onTouchEnd={() => setIsCirclePaused(false)}
+              >
+                {carouselCircles.map((circle, idx) => (
+                  <div key={`${circle.id}-${idx}`} className="w-[300px] sm:w-[350px] flex-shrink-0 select-none transform transition-transform">
+                     <CircleCard circle={circle} />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

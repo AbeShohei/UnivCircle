@@ -1,9 +1,203 @@
-import { Circle, CircleCategory, ScheduleEvent, FAQ } from './types';
+import { Circle, CircleCategory, ScheduleEvent, FAQ, Article } from './types';
 
 export const ALL_TAGS = [
   'インカレ', '初心者歓迎', 'ガチ勢', '飲み会多め', 'まったり', 
   '週1からOK', '合宿あり', '就活に強い', 'プログラミング', 
   '起業', 'テニス', 'ダンス', '軽音', '国際交流', 'e-sports', 'ボランティア'
+];
+
+export const MOCK_ARTICLES: Article[] = [
+  {
+    id: '1',
+    title: "新歓コンパの極意！失敗しない振る舞い方とは？",
+    category: "新歓攻略",
+    date: "2024.03.15",
+    image: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1000&auto=format&fit=crop",
+    readTime: "3 min",
+    author: "UnivCircle編集部",
+    tags: ["新歓", "飲み会", "マナー"],
+    content: `
+      <h2>新歓コンパは「最初の関門」ではない！</h2>
+      <p>新入生のみなさん、入学おめでとうございます！大学生活のスタートと共に始まるのが「新歓（新入生歓迎）期間」。<br>
+      特に「新歓コンパ（飲み会・食事会）」に参加するのは緊張しますよね。「お酒飲めないけど大丈夫かな？」「先輩と何話せばいいの？」そんな不安を解消するためのポイントを紹介します。</p>
+
+      <h3>1. 無理にお酒を飲む必要はナシ</h3>
+      <p>今の時代、無理にお酒を勧めるサークルは減っていますし、避けた方が無難です。「ウーロン茶で大丈夫ですか？」と最初に笑顔で伝えればOK。まともなサークルなら快く受け入れてくれます。</p>
+
+      <h3>2. 服装は「清潔感」重視で</h3>
+      <p>気合を入れすぎてスーツを着たり、逆にラフすぎてジャージで行くのはNG。また、高価すぎるブランド物も浮いてしまう可能性があります。<br>
+      <strong>「清潔感のあるカジュアル」</strong>（シャツにチノパン、ブラウスにスカートなど）が無難で好印象です。</p>
+
+      <h3>3. 会話のネタに困ったら？</h3>
+      <p>先輩も新入生と話す話題を探しています。以下の「鉄板ネタ」を持っておくと沈黙が怖くありません。</p>
+      <ul>
+        <li>出身地や高校時代の部活</li>
+        <li>履修登録の相談（これが一番盛り上がります！）</li>
+        <li>一人暮らしの自炊事情</li>
+      </ul>
+
+      <div class="bg-primary-900/20 p-4 rounded-lg border border-primary-500/30 my-6">
+        <h4 class="text-primary-400 font-bold mb-2">💡 先輩からのアドバイス</h4>
+        <p class="text-gray-300 text-sm">「新歓はサークル側が新入生をもてなす場。楽しませてもらおう！くらいの気持ちでリラックスして来てくれた方が、こちらも話しやすいよ！」（3年・テニスサークル幹事）</p>
+      </div>
+
+      <h3>まとめ</h3>
+      <p>新歓コンパは、サークルの雰囲気を肌で感じる絶好のチャンス。自分に合わないなと思ったら、無理に入らなくても大丈夫。たくさんのサークルを見て回って、居心地の良い場所を見つけてくださいね！</p>
+    `
+  },
+  {
+    id: '2',
+    title: "「兼サー」って実際どうなの？先輩に聞いたリアルな実情",
+    category: "インタビュー",
+    date: "2024.03.10",
+    image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=1000&auto=format&fit=crop",
+    readTime: "5 min",
+    author: "UnivCircle編集部",
+    tags: ["兼サー", "時間管理", "サークル選び"],
+    content: `
+      <h2>複数のサークルに入る「兼サー」</h2>
+      <p>「テニスもしたいけど、軽音でバンドも組みたい！」<br>
+      そんな欲張りな願いを叶えるのが、複数のサークルに所属する「兼サー（掛け持ち）」です。今回は実際に3つのサークルを掛け持ちしている先輩にインタビューしました。</p>
+
+      <h3>Q. どんなサークルを兼サーしていますか？</h3>
+      <p><strong>Aさん（文学部2年）：</strong><br>
+      「オールラウンドサークル（遊びメイン）」と「アコースティックギターサークル」、あと「学園祭実行委員」に入っています。</p>
+
+      <h3>Q. スケジュール管理は大変じゃないですか？</h3>
+      <p>正直、時期によっては大変です（笑）。<br>
+      特に学園祭の前などは実行委員が忙しくなるので、他のサークルは「幽霊部員」気味になります。でも、それぞれのサークルで活動日が被らないように調整すれば意外となんとかなりますよ。</p>
+
+      <h3>兼サーのメリット</h3>
+      <ul>
+        <li><strong>交友関係が広がる：</strong> 学部やタイプが違う友達がたくさんできます。</li>
+        <li><strong>居場所が増える：</strong> 1つのサークルで人間関係に疲れても、別の場所があるという安心感があります。</li>
+        <li><strong>いろいろな経験ができる：</strong> 運動も文化活動も両取りできます。</li>
+      </ul>
+
+      <h3>兼サーのデメリット</h3>
+      <ul>
+        <li><strong>出費がかさむ：</strong> 合宿代や飲み会代が2倍、3倍になります。</li>
+        <li><strong>「広く浅く」になりがち：</strong> どっちつかずになって、結局どちらも辞めてしまうパターンも。</li>
+      </ul>
+
+      <h3>結論：最初は兼サー推奨！</h3>
+      <p>新入生のうちは、気になったサークルにとりあえず入ってみるのがおすすめ。忙しくなったら、自然と自分に合うサークルに絞られていくものです。<br>
+      迷ったら両方入っちゃいましょう！</p>
+    `
+  },
+  {
+    id: '3',
+    title: "初心者歓迎は本当？運動系サークルの選び方ガイド",
+    category: "選び方",
+    date: "2024.03.01",
+    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1000&auto=format&fit=crop",
+    readTime: "4 min",
+    author: "スポーツサークル連盟",
+    tags: ["スポーツ", "初心者", "見極め"],
+    content: `
+      <h2>「初心者歓迎」の真実を見極めろ！</h2>
+      <p>大学から新しいスポーツを始めたい！そう思ってビラを見ると、どのサークルも「初心者大歓迎！」と書いてありますよね。<br>
+      しかし、実際に行ってみたら経験者ばかりで練習についていけなかった…なんてことも。本当に初心者が楽しめるサークルを見分けるポイントを解説します。</p>
+
+      <h3>1. 男女比と経験者比率を聞く</h3>
+      <p>新歓ブースで直球で聞いてみましょう。「今の1年生、2年生で大学から始めた人は何割くらいですか？」<br>
+      <strong>「半分くらいは初心者だよ」</strong>と言われたら安心です。逆に「数人いるよ」程度だと、指導体制が整っていない可能性があります。</p>
+
+      <h3>2. 練習頻度と強度（ガチ度）</h3>
+      <p>週4〜5回練習があるサークルは、基本的に大会での勝利を目指す「ガチ勢」が多いです。<br>
+      初心者が楽しむなら、<strong>週1〜2回</strong>、または「自由参加」のサークルがおすすめ。練習メニューに「基礎練」の時間が設けられているかも確認しましょう。</p>
+
+      <h3>3. セレクションの有無</h3>
+      <p>サッカーやバスケなどの人気サークルでは、入会テスト（セレクション）がある場合があります。これがあるサークルは間違いなく実力主義です。</p>
+
+      <h3>おすすめのジャンル</h3>
+      <p>大学から始める人が多いスポーツを選ぶのも手です。</p>
+      <ul>
+        <li>ラクロス</li>
+        <li>アルティメット</li>
+        <li>アーチェリー</li>
+        <li>ダンス（ジャンルによる）</li>
+      </ul>
+      <p>これらはスタートラインが同じなので、努力次第でレギュラーになれるチャンスも！</p>
+    `
+  },
+  {
+    id: '4',
+    title: "大学生活を充実させる！ボランティアサークルの魅力",
+    category: "ライフスタイル",
+    date: "2024.02.28",
+    image: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?q=80&w=1000&auto=format&fit=crop",
+    readTime: "3 min",
+    author: "学生ボランティアセンター",
+    tags: ["ボランティア", "地域貢献", "就活"],
+    content: `
+      <h2>「意識高い系」だけじゃない！</h2>
+      <p>ボランティアサークルと聞くと、「真面目そう」「意識高そう」と敬遠していませんか？<br>
+      実は、最も「大学生活らしい」体験ができるのがボランティアサークルなんです。その魅力を紹介します。</p>
+
+      <h3>魅力1：学外の人と関われる</h3>
+      <p>地域の子供たち、農家の方々、海外の学生など、普段の大学生活では絶対に出会えない人たちと交流できます。<br>
+      自分の視野が広がり、価値観が変わるきっかけになります。</p>
+
+      <h3>魅力2：企画力が身につく</h3>
+      <p>ゴミ拾いや募金活動だけでなく、地域のイベントを一から企画・運営することも多いです。<br>
+      「ゼロから何かを作り上げる」経験は、社会に出てからも大きな武器になります。</p>
+
+      <h3>魅力3：実は就活に強い</h3>
+      <p>企業は「主体的に動ける学生」を求めています。<br>
+      「誰かのために行動した経験」は、面接での強力なエピソードになります。ただし、就活のためだけにやるのではなく、心から楽しむことが大切です。</p>
+
+      <div class="bg-primary-900/20 p-4 rounded-lg border border-primary-500/30 my-6">
+        <h4 class="text-primary-400 font-bold mb-2">💡 どんな活動があるの？</h4>
+        <ul class="list-disc list-inside text-gray-300 text-sm space-y-1">
+          <li>ゴミ拾い・環境保全</li>
+          <li>子ども食堂のお手伝い</li>
+          <li>学習支援・塾講師ボランティア</li>
+          <li>災害復興支援</li>
+          <li>国際協力・海外ボランティア</li>
+        </ul>
+      </div>
+
+      <p>「何か人の役に立ちたい」「普通の遊びだけのサークルじゃ物足りない」そんな人は、ぜひ一度見学に行ってみてください。</p>
+    `
+  },
+  {
+    id: '5',
+    title: "プログラミング未経験からエンジニアへ！技術系サークル特集",
+    category: "キャリア",
+    date: "2024.02.20",
+    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1000&auto=format&fit=crop",
+    readTime: "6 min",
+    author: "Tech Circle Guide",
+    tags: ["プログラミング", "エンジニア", "Web開発"],
+    content: `
+      <h2>文系でも大丈夫？技術系サークルの世界</h2>
+      <p>IT業界への就職人気が高まる中、大学でプログラミングを始めたいという人が増えています。<br>
+      「情報系学部じゃないけど大丈夫？」「パソコン詳しくないけど…」<br>
+      大丈夫です！多くの技術系サークルは、文系・未経験者を歓迎しています。</p>
+
+      <h3>何をするの？</h3>
+      <p>主な活動内容は以下の通りです。</p>
+      <ul>
+        <li><strong>勉強会：</strong> 互いに教え合う、または外部講師を招いて学ぶ。</li>
+        <li><strong>ハッカソン：</strong> 短期間でチームでアプリやサービスを開発するイベント。</li>
+        <li><strong>受託開発：</strong> 地域の企業や大学から依頼を受けてWebサイトを作ることも。</li>
+      </ul>
+
+      <h3>独学との違い</h3>
+      <p>プログラミングは独学でも学べますが、挫折率は非常に高いです（9割とも言われます）。<br>
+      サークルに入る最大のメリットは<strong>「エラーが出たときに聞ける先輩がいる」</strong>こと。<br>
+      また、チーム開発の経験は、エンジニアとして働く上で必須のスキルです。</p>
+
+      <h3>サークル選びのポイント</h3>
+      <ol>
+        <li><strong>使用言語：</strong> Web系（JavaScript, PHP）、AI系（Python）、ゲーム系（C#, Unity）など、やりたい分野と合っているか。</li>
+        <li><strong>アウトプット文化：</strong> 「勉強しているだけ」ではなく、「実際に何か作っているか」を確認しましょう。学園祭でアプリを展示しているサークルは狙い目です。</li>
+      </ol>
+
+      <p>PC1台で世界を変えられるかもしれない。そんなクリエイティブな世界に飛び込んでみませんか？</p>
+    `
+  }
 ];
 
 // CSV for University Name and Reading
@@ -734,7 +928,7 @@ const UNIVERSITY_CSV_DATA = `
 静岡県立大学,しずおかけんりつだいがく
 静岡社会健康医学大学院大学,しずおかしゃかいけんこういがくいんだいがく
 静岡文化芸術大学,しずおかぶんかげいじゅつだいがく
-愛知県立大学,あいちけんりつだいがく
+愛知県立大学,あしかけんりつだいがく
 愛知県立芸術大学,あいちけんりつげいじゅつだいがく
 名古屋市立大学,なごやしりつだいがく
 三重県立看護大学,みえけんりつかんごだいがく
@@ -781,192 +975,233 @@ const UNIVERSITY_CSV_DATA = `
 名桜大学,めいおうだいがく
 `;
 
-// CSV for University Name and Campus Name
+// CSV for Campus
 // Format: UniversityName,CampusName
 const CAMPUS_CSV_DATA = `
 早稲田大学,早稲田キャンパス
 早稲田大学,戸山キャンパス
 早稲田大学,西早稲田キャンパス
 早稲田大学,所沢キャンパス
-慶應義塾大学,日吉キャンパス
 慶應義塾大学,三田キャンパス
+慶應義塾大学,日吉キャンパス
 慶應義塾大学,矢上キャンパス
-慶應義塾大学,湘南藤沢キャンパス
 慶應義塾大学,信濃町キャンパス
+慶應義塾大学,湘南藤沢キャンパス(SFC)
 慶應義塾大学,芝共立キャンパス
 明治大学,駿河台キャンパス
 明治大学,和泉キャンパス
 明治大学,中野キャンパス
 明治大学,生田キャンパス
-東京大学,本郷キャンパス
-東京大学,駒場キャンパス
-東京大学,柏キャンパス
 青山学院大学,青山キャンパス
 青山学院大学,相模原キャンパス
+立教大学,池袋キャンパス
+立教大学,新座キャンパス
+中央大学,多摩キャンパス
+中央大学,後楽園キャンパス
+中央大学,市ヶ谷田町キャンパス
+中央大学,茗荷谷キャンパス
+法政大学,市ケ谷キャンパス
+法政大学,多摩キャンパス
+法政大学,小金井キャンパス
+東京大学,本郷地区キャンパス
+東京大学,駒場地区キャンパス
+東京大学,柏地区キャンパス
+京都大学,吉田キャンパス
+京都大学,宇治キャンパス
+京都大学,桂キャンパス
+大阪大学,豊中キャンパス
+大阪大学,吹田キャンパス
+大阪大学,箕面キャンパス
+同志社大学,今出川校地
+同志社大学,京田辺校地
+立命館大学,衣笠キャンパス
+立命館大学,大阪いばらきキャンパス(OIC)
+立命館大学,びわこ・くさつキャンパス(BKC)
+関西大学,千里山キャンパス
+関西大学,高槻キャンパス
+関西大学,高槻ミューズキャンパス
+関西大学,堺キャンパス
+関西学院大学,西宮上ケ原キャンパス
+関西学院大学,西宮聖和キャンパス
+関西学院大学,神戸三田キャンパス
+日本大学,法学部キャンパス
+日本大学,文理学部キャンパス
+日本大学,経済学部キャンパス
+日本大学,商学部キャンパス
+日本大学,芸術学部キャンパス
+日本大学,国際関係学部キャンパス
+日本大学,理工学部キャンパス
+日本大学,生産工学部キャンパス
+日本大学,工学部キャンパス
+日本大学,医学部キャンパス
+日本大学,歯学部キャンパス
+日本大学,松戸歯学部キャンパス
+日本大学,生物資源科学部キャンパス
+日本大学,薬学部キャンパス
+東洋大学,白山キャンパス
+東洋大学,赤羽台キャンパス
+東洋大学,川越キャンパス
+駒澤大学,駒沢キャンパス
+駒澤大学,深沢キャンパス
+専修大学,神田キャンパス
+専修大学,生田キャンパス
 `;
 
-export interface University {
+interface University {
   name: string;
-  reading: string;
+  reading?: string; // Optional reading for autocomplete
   campuses: string[];
 }
 
-// Simple CSV Parser
+// Parse CSVs and Merge
 const parseUniversities = (): University[] => {
-  const uniMap = new Map<string, University>();
+  const universitiesMap = new Map<string, University>();
 
-  // Parse Names
-  const uniLines = UNIVERSITY_CSV_DATA.trim().split('\n');
-  uniLines.forEach(line => {
+  // 1. Parse University Names
+  const lines = UNIVERSITY_CSV_DATA.trim().split('\n');
+  lines.forEach(line => {
     const [name, reading] = line.trim().split(',');
     if (name) {
-      uniMap.set(name, { name, reading: reading || '', campuses: [] });
+      universitiesMap.set(name, {
+        name,
+        reading,
+        campuses: ['キャンパス'] // Default generic campus
+      });
     }
   });
 
-  // Parse Campuses
-  const campLines = CAMPUS_CSV_DATA.trim().split('\n');
-  campLines.forEach(line => {
-    const [name, campus] = line.trim().split(',');
-    if (name && campus && uniMap.has(name)) {
-      uniMap.get(name)!.campuses.push(campus);
+  // 2. Parse Campuses and Merge
+  const campusLines = CAMPUS_CSV_DATA.trim().split('\n');
+  campusLines.forEach(line => {
+    const [uniName, campusName] = line.trim().split(',');
+    if (uniName && campusName) {
+      const uni = universitiesMap.get(uniName);
+      if (uni) {
+        // If it's the first specific campus, clear the default 'キャンパス'
+        if (uni.campuses.length === 1 && uni.campuses[0] === 'キャンパス') {
+          uni.campuses = [];
+        }
+        uni.campuses.push(campusName);
+      }
     }
   });
 
-  // Default campus for those without specific ones
-  uniMap.forEach(u => {
-    if (u.campuses.length === 0) {
-      u.campuses.push('キャンパス');
-    }
-  });
-
-  return Array.from(uniMap.values());
+  return Array.from(universitiesMap.values());
 };
 
 export const MOCK_UNIVERSITIES: University[] = parseUniversities();
 
-// ---- MOCK DATA GENERATION UTILS ----
-
-const getRandomItem = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
-const getRandomSubset = <T>(arr: T[], count: number): T[] => {
-  const shuffled = [...arr].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count);
-};
-
-const CIRCLE_NAMES_PREFIX = ['早稲田', '慶應', '明治', '東京', '学生', '全学', 'インカレ'];
-const CIRCLE_NAMES_SUFFIX = ['テニスサークル', 'フットサル', '軽音部', 'ダンス同好会', 'プログラミング研究会', 'ボランティアサークル', '国際交流会', '映画研究会', '写真部', '演劇サークル', 'バスケ部', 'バドミントン', '手芸同好会', 'e-sportsサークル'];
-
-const DESCRIPTIONS = [
-  '初心者から経験者まで幅広く活動しています！毎週楽しく活動中。',
-  'ガチでやりたい人も、まったり楽しみたい人も大歓迎！',
-  '学園祭での発表に向けて練習しています。飲み会も適度にあります。',
-  'インカレサークルなので他大の友達もたくさん作れます！',
-  '就活に強い先輩も多数在籍。縦のつながりも大事にしています。',
-  '新設サークルなので、みんなで一から作り上げていきましょう！',
-  '週1回の活動なので兼サーもOKです。自分のペースで参加できます。',
-  '合宿やイベントも盛りだくさん！最高の大学生活を送りましょう。'
-];
-
+// Generate comprehensive mock circles for ALL universities and campuses
 const generateMockCircles = (): Circle[] => {
   const circles: Circle[] = [];
   let idCounter = 1;
 
-  MOCK_UNIVERSITIES.forEach(uni => {
-    // Generate exactly one circle per university to keep the list manageable but complete
-    const campus = getRandomItem(uni.campuses);
-    
-    const category = getRandomItem(Object.values(CircleCategory));
-    const tags = getRandomSubset(ALL_TAGS, 3);
-    const suffix = getRandomItem(CIRCLE_NAMES_SUFFIX);
-    // Create a name like "UniversityName Tennis Circle"
-    const name = `${uni.name} ${suffix}`;
-    
-    // Random Images
-    const imageId = Math.floor(Math.random() * 1000);
-    const imageUrl = `https://picsum.photos/800/600?random=${idCounter}`;
-    
-    // Generate dates dynamically for schedules
-    const today = new Date();
-    const nextWeek = new Date(today);
-    nextWeek.setDate(today.getDate() + 7);
-    const twoWeeks = new Date(today);
-    twoWeeks.setDate(today.getDate() + 14);
+  const categories = Object.values(CircleCategory);
+  const days = ['月', '火', '水', '木', '金', '土', '日'];
+  
+  const circleNamePrefixes = [
+    'Enjoy', 'Global', 'Tech', 'Music', 'Active', 'Study', 'Creative', 'Next', 'Union', 'Team',
+    '早稲田', '慶應', '明治', '東京', '日本', '学生', '本気', 'ゆる', 'ガチ'
+  ];
+  
+  const circleNameSuffixes = [
+    'Circle', 'Club', 'Society', 'Lab', 'Project', 'Association', 'Group', 'Community', 'Band', 'Team',
+    'サークル', '部', '研究会', '同好会', '委員会', '団', 'プロジェクト'
+  ];
 
-    circles.push({
+  // Helper for random choice
+  const rand = (arr: any[]) => arr[Math.floor(Math.random() * arr.length)];
+  const randInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
+  const randBool = () => Math.random() > 0.5;
+
+  // We want EXACTLY ONE circle per university to ensure coverage without explosion
+  MOCK_UNIVERSITIES.forEach(uni => {
+    // Pick a random campus if multiple exist
+    const campus = rand(uni.campuses);
+    
+    // Generate just one circle per University for this "Complete Mock" requirement
+    const category = rand(categories) as CircleCategory;
+    const activityDays = [rand(days), rand(days)].filter((v, i, a) => a.indexOf(v) === i); // unique days
+    
+    const name = `${rand(circleNamePrefixes)} ${rand(circleNameSuffixes)}`;
+
+    const newCircle: Circle = {
       id: idCounter.toString(),
       name: name,
       university: uni.name,
       category: category,
-      description: getRandomItem(DESCRIPTIONS) + '\n\n' + getRandomItem(DESCRIPTIONS) + '\n\n' + 'いつでも見学受け付けています！気軽にご連絡ください。',
-      shortDescription: getRandomItem(DESCRIPTIONS).substring(0, 40) + '...',
-      tags: tags,
-      campus: [campus],
-      activityDays: getRandomSubset(['月', '火', '水', '木', '金', '土', '日'], 2),
-      memberCount: Math.floor(Math.random() * 100) + 10,
-      showMemberBreakdown: true, // Always show for "complete" mock data
-      memberBreakdown: {
-        gender: { male: Math.floor(Math.random() * 30) + 10, female: Math.floor(Math.random() * 30) + 10 },
-        grade: { y1: 15, y2: 12, y3: 8, y4: 3, other: 0 }
-      },
-      representativeEmail: `contact${idCounter}@example.com`,
-      contactEmail: `contact${idCounter}@example.com`,
-      imageUrl: imageUrl,
+      campus: [campus], // Assign specific campus
+      description: `私たち${name}は、${uni.name}${campus}を中心に活動している${category}サークルです。\n\n初心者から経験者まで幅広く歓迎しています！\n主な活動内容は週${activityDays.length}回の練習と、季節ごとの合宿やイベントです。\n\nアットホームな雰囲気で、学部・学年問わず仲が良いのが自慢です。大学生活を充実させたい人、新しい友達を作りたい人、ぜひ一度見学に来てください！\n\n試験前は勉強会も開催しているので、文武両道を目指せます。`,
+      shortDescription: `${uni.name}公認の${category}サークルです！初心者歓迎、${activityDays.join('・')}に活動中。`,
+      tags: [category, '初心者歓迎', 'インカレ', '飲み会少なめ'].slice(0, randInt(2, 4)),
+      activityDays: activityDays,
+      memberCount: randInt(20, 150),
+      foundedYear: randInt(1980, 2023),
+      fee: randBool() ? `年間${randInt(3, 10)}000円` : '無料',
+      imageUrl: `https://picsum.photos/800/600?random=${idCounter}`,
       images: [
-        imageUrl, 
-        `https://picsum.photos/800/600?random=${idCounter + 10000}`, 
-        `https://picsum.photos/800/600?random=${idCounter + 20000}`
+        `https://picsum.photos/800/600?random=${idCounter}`,
+        `https://picsum.photos/800/600?random=${idCounter + 10000}`,
+        `https://picsum.photos/800/600?random=${idCounter + 20000}`,
       ],
-      instagramUrl: 'https://instagram.com/mock_circle',
-      twitterUrl: 'https://x.com/mock_circle',
-      foundedYear: 2000 + Math.floor(Math.random() * 24),
-      fee: Math.random() > 0.5 ? '月額500円' : '半期3000円',
+      // Always add SNS for complete mock
+      instagramUrl: `https://instagram.com/mock_${idCounter}`,
+      twitterUrl: `https://twitter.com/mock_${idCounter}`,
+      
+      // Always show breakdown
+      showMemberBreakdown: true,
+      memberBreakdown: {
+        gender: { male: randInt(10, 50), female: randInt(10, 50) },
+        grade: { y1: randInt(5, 20), y2: randInt(5, 20), y3: randInt(5, 20), y4: randInt(5, 20), other: randInt(0, 5) }
+      },
+
+      // Contact info
+      representativeEmail: `rep_${idCounter}@example.com`,
+      contactEmail: `contact_${idCounter}@example.com`,
+      
+      // Schedules
       schedules: [
-          { 
-            id: `sch-${idCounter}-1`, 
-            date: today.toISOString().split('T')[0], 
-            title: '新歓体験会・説明会', 
-            content: '活動の雰囲気を知れるチャンスです！初心者大歓迎。必要な道具は貸し出します。', 
-            location: '学生会館 301会議室', 
-            capacity: '20名', 
-            startTime: '18:00', 
-            endTime: '20:00' 
-          },
-          { 
-            id: `sch-${idCounter}-2`, 
-            date: nextWeek.toISOString().split('T')[0], 
-            title: '新入生歓迎食事会', 
-            content: 'みんなでご飯を食べながら交流しましょう！先輩たちの履修相談も聞けます。', 
-            location: '大学近くのレストラン', 
-            capacity: '30名', 
-            startTime: '19:00', 
-            endTime: '21:00' 
-          },
-          { 
-            id: `sch-${idCounter}-3`, 
-            date: twoWeeks.toISOString().split('T')[0], 
-            title: '合同練習会', 
-            content: '他大学との合同練習です。レベルに合わせてグループ分けするので安心してください。', 
-            location: '体育館アリーナ', 
-            capacity: '40名', 
-            startTime: '13:00', 
-            endTime: '17:00' 
-          }
+         {
+           id: `sch-${idCounter}-1`,
+           date: new Date().toISOString().split('T')[0], // Today
+           title: '新歓説明会＆食事会',
+           content: 'サークルの活動内容を説明します。その後はみんなでご飯に行きましょう！',
+           location: '学生会館101',
+           capacity: '30名',
+           startTime: '18:00',
+           endTime: '21:00'
+         },
+         {
+           id: `sch-${idCounter}-2`,
+           date: new Date(Date.now() + 86400000 * 3).toISOString().split('T')[0], // 3 days later
+           title: '体験練習会',
+           content: '実際の活動を体験してみよう。初心者には優しく教えます！',
+           location: 'アリーナ',
+           capacity: '20名',
+           startTime: '16:30',
+           endTime: '19:00'
+         }
       ],
-      customFields: [
-          { id: `custom-${idCounter}-1`, label: '公式Webサイト', value: 'https://example.com' },
-          { id: `custom-${idCounter}-2`, label: '実績', value: Math.random() > 0.5 ? '関東大会ベスト8' : '学園祭人気投票1位' },
-          { id: `custom-${idCounter}-3`, label: '活動場所詳細', value: '主に部室棟の共用スペースや近くの公園で活動しています。' }
-      ],
+
+      // FAQs
       faqs: [
-          { id: `faq-${idCounter}-1`, question: '初心者でも大丈夫ですか？', answer: 'はい！大歓迎です。現在のメンバーの半数以上が大学から始めています。' },
-          { id: `faq-${idCounter}-2`, question: '兼サーは可能ですか？', answer: '可能です。週1回の参加でもOKですので、他のサークルやバイトと両立しやすいです。' },
-          { id: `faq-${idCounter}-3`, question: 'お金はどのくらいかかりますか？', answer: '会費以外には、合宿（任意参加）の費用がかかる程度です。道具は貸し出しもあります。' }
+        { id: 'f1', question: '初心者でも大丈夫ですか？', answer: 'もちろんです！現メンバーの半数以上が大学から始めています。' },
+        { id: 'f2', question: '兼サーはできますか？', answer: '可能です。活動は強制参加ではないので、自分のペースで参加できます。' },
+        { id: 'f3', question: '途中入会は可能ですか？', answer: 'はい、通年でメンバーを募集しています。いつでも連絡してください。' }
+      ],
+
+      // Custom Fields
+      customFields: [
+        { id: 'c1', label: '公式サイト', value: 'https://example.com' },
+        { id: 'c2', label: '昨年度実績', value: '関東大会出場' }
       ]
-    });
+    };
+    
+    circles.push(newCircle);
     idCounter++;
   });
-
+  
   return circles;
 };
 
-export const MOCK_CIRCLES: Circle[] = generateMockCircles();
+export const MOCK_CIRCLES = generateMockCircles();
