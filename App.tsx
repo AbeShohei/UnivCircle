@@ -12,6 +12,7 @@ import SignupPage from './pages/SignupPage';
 import CircleRegisterPage from './pages/CircleRegisterPage';
 import AdsInfoPage from './pages/AdsInfoPage';
 import ArticlePage from './pages/ArticlePage';
+import ArticleListPage from './pages/ArticleListPage';
 
 const App: React.FC = () => {
   return (
@@ -28,6 +29,7 @@ const App: React.FC = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/ads-info" element={<AdsInfoPage />} />
+          <Route path="/articles" element={<ArticleListPage />} />
           <Route path="/article/:id" element={<ArticlePage />} />
         </Routes>
       </Layout>

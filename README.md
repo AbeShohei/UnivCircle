@@ -10,10 +10,14 @@
 
 ## ✨ 主な機能
 
-### 1. ユーザー向け機能 (検索・閲覧)
+### 1. ユーザー向け機能 (検索・閲覧・メディア)
 *   **TOPページ (ランディング)**
     *   **3Dフローティングアニメーション**: 没入感のあるダークモードデザインと動的な背景要素。
-    *   **AI Neural Match**: 「ガチすぎず、でも成長できる場所がいい」といった自然言語の要望から、Gemini AIが最適な検索条件（大学、キャンパス、カテゴリ、タグ）を推論・提案します。
+    *   **AI Neural Match**: 「ガチすぎず、でも成長できる場所がいい」といった自然言語の要望から、Gemini AIが最適な検索条件を推論・提案します。
+    *   **無限スクロール**: 特集記事や注目サークルが流れるインタラクティブなカルーセルUI。
+*   **特集記事メディア (New!)**
+    *   サークル選びのコツや新歓攻略法などの記事コンテンツ配信。
+    *   SNSシェア機能（X, Instagram, LINE）とサークル検索へのスムーズな導線。
 *   **検索ページ**
     *   **高度なフィルタリング**: キーワード、大学・キャンパス（予測変換付き）、カテゴリ、タグによる絞り込み。
     *   **レスポンシブレイアウト**: スマホでは積み上げ型、PCではサイドバー＋グリッド表示に最適化。
@@ -23,6 +27,8 @@
     *   **メンバー構成グラフ**: 男女比、学年比を可視化（公開/非公開設定可）。
     *   **よくある質問 (FAQ)**: Q&A形式で不安を解消。
     *   **お問い合わせ**: モーダルフォームおよびSNS（X, Instagram）への導線。
+*   **企業・広告掲載ページ**
+    *   企業向けの広告プラン案内と申し込みフォーム。
 
 ### 2. サークル運営者向け機能 (管理・掲載)
 *   **新規掲載・登録**
@@ -52,7 +58,7 @@
 *   **Data Management**:
     *   **LocalStorage**: ユーザー登録データや編集内容の永続化（デモ用）。
     *   **CSV Parsing**: 全国の大学・キャンパスデータの読み込みとマッピング。
-    *   **Mock Data Generation**: 開発用に数百件規模のサークルデータを自動生成。
+    *   **Mock Data Generation**: 全国の大学に対して「完全な」サークルデータを自動生成し、表示確認を容易に。
 
 ## 📂 ディレクトリ構造
 
@@ -61,7 +67,7 @@
 ├── index.html              # エントリーポイント (Tailwind設定、Font読み込み)
 ├── index.tsx               # Reactルート
 ├── App.tsx                 # ルーティング定義
-├── types.ts                # 型定義 (Circle, User, ScheduleEvent等)
+├── types.ts                # 型定義 (Circle, User, ScheduleEvent, Article等)
 ├── constants.ts            # 定数・モックデータ・CSVパースロジック
 │
 ├── components/             # UIコンポーネント
@@ -72,7 +78,7 @@
 │   └── UniversityAutocomplete.tsx # 大学名予測変換
 │
 ├── pages/                  # ページコンポーネント
-│   ├── TopPage.tsx         # トップ (AI検索、ヒーロー)
+│   ├── TopPage.tsx         # トップ (AI検索、ヒーロー、無限スクロール)
 │   ├── SearchPage.tsx      # 検索一覧
 │   ├── DetailPage.tsx      # 詳細ページ
 │   ├── AdminPage.tsx       # 管理画面
@@ -80,7 +86,9 @@
 │   ├── CircleRegisterPage.tsx # 新規登録フォーム
 │   ├── UserProfilePage.tsx # マイページ
 │   ├── LoginPage.tsx       # ログイン
-│   └── SignupPage.tsx      # サインアップ
+│   ├── SignupPage.tsx      # サインアップ
+│   ├── AdsInfoPage.tsx     # 広告掲載案内
+│   └── ArticlePage.tsx     # 特集記事詳細
 │
 └── services/               # ロジック・API
     ├── geminiService.ts    # Gemini AI連携

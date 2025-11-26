@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Search, User, LogIn, LogOut, PlusCircle, Settings, Building2 } from 'lucide-react';
+import { Menu, X, Search, User, LogIn, LogOut, PlusCircle, Settings, Building2, BookOpen } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 interface LayoutProps {
@@ -51,6 +51,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               </Link>
               <Link to="/create-circle" className={`text-sm font-medium transition-colors ${location.pathname === '/create-circle' ? 'text-primary-400' : 'text-gray-400 hover:text-white'}`}>
                 サークルを掲載する
+              </Link>
+              <Link to="/articles" className={`text-sm font-medium transition-colors ${location.pathname === '/articles' ? 'text-primary-400' : 'text-gray-400 hover:text-white'}`}>
+                記事一覧
               </Link>
               <Link to="/ads-info" className={`text-sm font-medium transition-colors ${location.pathname === '/ads-info' ? 'text-primary-400' : 'text-gray-400 hover:text-white'}`}>
                 企業・広告掲載
@@ -145,6 +148,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 サークルを掲載する
               </Link>
               <Link 
+                to="/articles" 
+                className="block px-3 py-3 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 flex items-center gap-3"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <BookOpen className="w-5 h-5 text-gray-500" />
+                記事一覧
+              </Link>
+              <Link 
                 to="/ads-info" 
                 className="block px-3 py-3 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 flex items-center gap-3"
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -201,6 +212,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <ul className="mt-4 space-y-4">
                 <li><Link to="/search" className="text-base text-gray-400 hover:text-white transition">サークル検索</Link></li>
                 <li><Link to="/create-circle" className="text-base text-gray-400 hover:text-white transition">サークル掲載</Link></li>
+                <li><Link to="/articles" className="text-base text-gray-400 hover:text-white transition">特集記事一覧</Link></li>
               </ul>
             </div>
             <div>
